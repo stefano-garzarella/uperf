@@ -125,7 +125,8 @@ recv_goodbye(goodbye_t *g, protocol_t *p, int timeout)
 	(void) bzero(g, sizeof (goodbye_t));
 	if (safe_read(p->fd, (char *)g, sizeof (goodbye_t), timeout)
 	    != UPERF_SUCCESS) {
-		uperf_info("Error exchanging goodbye's with client ");
+		uperf_info("Error exchanging goodbye's with client - timeout: %d errno: %d",
+			   timeout, errno);
 		return (UPERF_FAILURE);
 	}
 	if (strncmp(g->magic, GOODBYE_MAGIC, sizeof (g->magic)) != 0) {
